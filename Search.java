@@ -6,6 +6,7 @@
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
+
 import java.text.*;
 
 public class Search {
@@ -57,6 +58,10 @@ public class Search {
 	private static double TmemberFitness;
 
 	private static double fitnessStats[][];  // 0=Avg, 1=Best
+	
+	public static int extinctionFrequency = 40;
+	public static double extinctionProbability = 1;
+	public static int extinctionType = 0;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -171,6 +176,13 @@ public class Search {
 				sumRawFitness = 0;
 				sumRawFitness2 = 0;
 				bestOfGenChromo.rawFitness = defaultBest;
+				
+				if (G % extinctionFrequency == 0) {
+					// Probability of performing extinction this time around
+					if(Search.r.nextDouble() < extinctionProbability) {
+						performMassExtinction();
+					}
+				}
 
 				//	Test Fitness of Each Member
 				for (int i=0; i<Parameters.popSize; i++){
@@ -497,6 +509,31 @@ public class Search {
 		System.out.println("End  :  " + endTime);
 		
 	} // End of Main Class
+	
+	public static void performMassExtinction() {
+		// Random Regeneration method
+		if(extinctionType == 0) {
+			int[] randomIndices = pickRandomIndices(0.8);
+			for (int i = 0; i < randomIndices.length; i++) {
+				int index = randomIndices[i];
+				member[index] = new Chromo();
+				int a = 0;
+			}
+		}
+	}
+	
+	public static int[] pickRandomIndices(double percent) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i < member.length; i++) {
+			list.add(i);
+		}
+		Collections.shuffle(list, r);
+		int[] res = new int[(int)(percent * member.length)];
+		for (int i = 0; i < res.length; i++) {
+			res[i] = list.get(i);
+		}
+		return res;
+	}
 
 	public static void testSwapMutation() {
 		System.out.println();
