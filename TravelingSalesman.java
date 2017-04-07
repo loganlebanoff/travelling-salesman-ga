@@ -32,14 +32,7 @@ double[][] adj;
 
 		name = "TravelingSalesman";
 
-		Scanner in;
-		String home = Paths.get(System.getProperty("user.home")).toString();
-		if (home.equals("C:\\Users\\Kevin")) {
-			in = new Scanner(new File("C:\\Users\\Kevin\\Dropbox\\CAP 5512\\EvoHW4\\TSP\\src\\TSP.data"));
-		}
-		else {
-			in = new Scanner(new File(Parameters.dataInputFileName));
-		}
+		Scanner in = new Scanner(new File(Parameters.dataInputFileName));
 
 		adj = new double[Parameters.numGenes][Parameters.numGenes];
 		double sumDist = 0;
@@ -47,7 +40,9 @@ double[][] adj;
 			for(int j = 0; j < Parameters.numGenes; j ++) {
 				double dist = in.nextDouble();
 				adj[i][j] = dist;
-				sumDist += dist;
+				if (i > j) {
+					sumDist += dist; // Only count each pairwise distance once
+				}
 			}
 		}
 		count = Parameters.numGenes*(Parameters.numGenes - 1) / 2;
@@ -75,6 +70,39 @@ double[][] adj;
 			F += adj[chromo[i]][chromo[i+1]];
 		}
 		return F;
+	}
+	
+	public double[][] calcSubpathFitnesses(Chromo X) {
+		
+		// Subpath fitness is the expected length of the subpath (avg dist * number of edges) divided by actual length
+		// Higher values are better
+
+		int[] chromo = X.chromo;
+		int L = chromo.length;
+		double[][] totDistance = new double[L][L];
+		double[][] fitness = new double[L][L];
+		double sum = 0;
+
+		// i is first index of subpath, j is last index of subpath
+		for (int i = 0; i < L; i ++) {
+			for (int j = i + 1; j < L; j ++) {
+
+				if (!(i == 0 && j == L - 1)) { // Don't allow the entire path to be selected
+					totDistance[i][j] = totDistance[i][j-1]; // Start with previous subpath (not counting city j)
+					totDistance[i][j] += adj[chromo[j-1]][chromo[j]]; // Add city j-1 to j distance
+
+					fitness[i][j] = avgDist*(j - i) / totDistance[i][j];
+					sum += fitness[i][j];
+				}
+			}
+		}
+		for (int i = 0; i < L; i ++) {
+			for (int j = i + 1; j < L; j ++) {
+				fitness[i][j] /= sum;
+			}
+		}
+		
+		return fitness;
 	}
 
 //  PRINT OUT AN INDIVIDUAL GENE TO THE SUMMARY FILE *********************************

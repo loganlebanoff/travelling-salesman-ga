@@ -106,7 +106,7 @@ public class Chromo
 		switch (Parameters.mutationType){
 
 		case 1:    
-			//TODO: Try displacement mutation as well
+			//TODO: Try displacement mutation as well with some probability
 			this.doSwapMutation();
 			break;
 		default:
@@ -127,10 +127,16 @@ public class Chromo
 		chromo[pos2] = temp;
 	}
 
-	public void doDisplacementMutation() {
+	public void doDisplacementMutation(boolean useBBFitness) {
 		
 		int L = chromo.length;
-		int[] cuts = Chromo.pickSubtourCuts(L);
+		int[] cuts;
+		if (useBBFitness) {
+			cuts = this.pickSubtourCutsUseBBFitness();
+		}
+		else {
+			cuts = Chromo.pickSubtourCutsRandom(L);
+		}
 		System.out.println("cuts = " + cuts[0] + ", " + cuts[1]);
 
 		int subpathSize = cuts[1] - cuts[0] + 1;
@@ -162,12 +168,33 @@ public class Chromo
 		
 		chromo = newChromo;
 	}
+	
+	public int[] pickSubtourCutsUseBBFitness() {
+		
+		int L = this.chromo.length;
+		double rand = Search.r.nextDouble();
+		double rWheel = 0;
+		int[] cuts = new int[2];
+		
+		double[][] bbFits = ((TravelingSalesman)Search.problem).calcSubpathFitnesses(this);
+		for (int i = 0; i < L; i ++) {
+			for (int j = i + 1; j < L; j ++) {
+				rWheel = rWheel + bbFits[i][j];
+				if (rand < rWheel) {
+					cuts[0] = i;
+					cuts[1] = j;
+					return cuts;
+				}
+			}
+		}
+		return cuts;
+	}
 
 /*******************************************************************************
 *                             STATIC METHODS                                   *
 *******************************************************************************/
 
-	public static int[] pickSubtourCuts(int L) {
+	public static int[] pickSubtourCutsRandom(int L) {
 
 		int cut1 = Search.r.nextInt(L);
 		int cut2 = cut1;
@@ -239,8 +266,8 @@ public class Chromo
 		switch (Parameters.xoverType){
 
 		case 1:    
-			//TODO: Give xover chance of using BB-fitness aware method
-			Chromo.performOrderedXover(parent1.chromo, parent2.chromo, child1, child2);
+			//TODO: Give xover chance of using BB-fitness aware method (change false to true with some probability)
+			Chromo.performOrderedXover(parent1, parent2, child1, child2, false);
 			break;
 
 		case 2:     //  Two Point Crossover
@@ -275,12 +302,27 @@ public class Chromo
 		child.proFitness = -1;   //  Fitness not yet proportionalized
 	}
 	
-	public static void performOrderedXover(int[] parent0, int[] parent1, Chromo child0, Chromo child1) {
+	public static void performOrderedXover(Chromo parentChromo0, Chromo parentChromo1, 
+			Chromo child0, Chromo child1, boolean useBBFitness) {
 		
+		int[] parent0 = parentChromo0.chromo;
+		int[] parent1 = parentChromo1.chromo;
+
 		int L = parent0.length;
 		int[][] children = new int[2][L];
 		
-		int[] cuts = Chromo.pickSubtourCuts(L);
+		int[] cuts;
+		if (useBBFitness) {
+			// Give each parent equal chance of choosing a good BB
+			double rand = Search.r.nextDouble();
+			if (rand < 0.5)
+				cuts = parentChromo0.pickSubtourCutsUseBBFitness();
+			else
+				cuts = parentChromo1.pickSubtourCutsUseBBFitness();
+		}
+		else {
+			cuts = Chromo.pickSubtourCutsRandom(L);
+		}
 		
 //		System.out.println("Cut1 = " + cuts[0]);
 //		System.out.println("Cut2 = " + cuts[1]);

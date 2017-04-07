@@ -107,8 +107,9 @@ public class Search {
 		else System.out.println("Invalid Problem Type");
 		
 		// TODO: Remove test functions later
+//		Search.testSubpathFitnesses();
 //		Search.testSwapMutation();
-//		Search.testDisplacementMutation();
+		Search.testDisplacementMutation(true);
 //		Search.testXover();
 		
 //		System.out.println(problem.name);
@@ -508,12 +509,12 @@ public class Search {
 		printChromo(X);
 	}
 	
-	public static void testDisplacementMutation() {
+	public static void testDisplacementMutation(boolean useBBFitness) {
 		System.out.println();
 		Chromo X = new Chromo();
 		System.out.println("Before displacement mutation:");
 		printChromo(X);
-		X.doDisplacementMutation();
+		X.doDisplacementMutation(useBBFitness);
 		System.out.println("After displacement mutation:");
 		printChromo(X);
 	}
@@ -530,7 +531,7 @@ public class Search {
 		
 		Chromo child1 = new Chromo();
 		Chromo child2 = new Chromo();
-		Chromo.performOrderedXover(parent1.chromo, parent2.chromo, child1, child2);
+		Chromo.performOrderedXover(parent1, parent2, child1, child2, false);
 		
 		System.out.println("Parents");
 		printChromo(parent2);
@@ -541,6 +542,23 @@ public class Search {
 		printChromo(child2);
 	}
 	
+	public static void testSubpathFitnesses() {
+		
+		System.out.println("\n");
+		Chromo X = new Chromo();
+		printChromo(X);
+		double[][] subpathFitnesses = ((TravelingSalesman)problem).calcSubpathFitnesses(X);
+		int L = X.chromo.length;
+		for (int i=0; i<L; i++) {
+			for (int j=0; j<L; j++) {
+				System.out.printf("%.2f ", subpathFitnesses[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println();
+
+	}
+
 	public static void printChromo(Chromo X) {
 		
 		for(int l=0; l<X.chromo.length; l++)
