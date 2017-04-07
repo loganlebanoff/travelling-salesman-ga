@@ -20,8 +20,6 @@ public class TravelingSalesman extends FitnessFunction{
 *                            STATIC VARIABLES                                  *
 *******************************************************************************/
 
-double count; 	// Number of subpaths in a chromosome AND number of pairwise distances between cities
-double avgDist; // Avg distance between cities
 double[][] adj;
 
 /*******************************************************************************
@@ -45,8 +43,6 @@ double[][] adj;
 				}
 			}
 		}
-		count = Parameters.numGenes*(Parameters.numGenes - 1) / 2;
-		avgDist = sumDist / count; // TODO: This assumes dist(i,j) = dist(j,i) !!
 	}
 
 /*******************************************************************************
@@ -74,8 +70,8 @@ double[][] adj;
 	
 	public double[][] calcSubpathFitnesses(Chromo X) {
 		
-		// Subpath fitness is the expected length of the subpath (avg dist * number of edges) divided by actual length
-		// Higher values are better
+		// Subpath fitness is the number of edges in the subpath divided by the subpath length, normalized so that
+		// all fitness values add up to 1. Higher fitness values are better.
 
 		int[] chromo = X.chromo;
 		int L = chromo.length;
@@ -91,11 +87,12 @@ double[][] adj;
 					totDistance[i][j] = totDistance[i][j-1]; // Start with previous subpath (not counting city j)
 					totDistance[i][j] += adj[chromo[j-1]][chromo[j]]; // Add city j-1 to j distance
 
-					fitness[i][j] = avgDist*(j - i) / totDistance[i][j];
+					fitness[i][j] = (j - i) / totDistance[i][j];
 					sum += fitness[i][j];
 				}
 			}
 		}
+		// Normalize
 		for (int i = 0; i < L; i ++) {
 			for (int j = i + 1; j < L; j ++) {
 				fitness[i][j] /= sum;

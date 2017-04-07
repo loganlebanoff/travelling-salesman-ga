@@ -109,7 +109,7 @@ public class Search {
 		// TODO: Remove test functions later
 //		Search.testSubpathFitnesses();
 //		Search.testSwapMutation();
-		Search.testDisplacementMutation(true);
+//		Search.testDisplacementMutation(true);
 //		Search.testXover();
 		
 //		System.out.println(problem.name);
