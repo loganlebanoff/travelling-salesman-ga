@@ -4,6 +4,7 @@
 *******************************************************************************/
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.*;
 import java.text.*;
 
@@ -104,7 +105,12 @@ public class Search {
 		}
 	
 		else System.out.println("Invalid Problem Type");
-
+		
+		// TODO: Remove test functions later
+//		Search.testSwapMutation();
+//		Search.testDisplacementMutation();
+//		Search.testXover();
+		
 //		System.out.println(problem.name);
 
 	//	Initialize RNG, array sizes and other objects
@@ -488,8 +494,59 @@ public class Search {
 		dateAndTime = Calendar.getInstance(); 
 		Date endTime = dateAndTime.getTime();
 		System.out.println("End  :  " + endTime);
-
+		
 	} // End of Main Class
+
+	public static void testSwapMutation() {
+		System.out.println();
+		System.out.println();
+		Chromo X = new Chromo();
+		System.out.println("Before swap mutation:");
+		printChromo(X);
+		X.doSwapMutation();
+		System.out.println("After swap mutation:");
+		printChromo(X);
+	}
+	
+	public static void testDisplacementMutation() {
+		System.out.println();
+		Chromo X = new Chromo();
+		System.out.println("Before displacement mutation:");
+		printChromo(X);
+		X.doDisplacementMutation();
+		System.out.println("After displacement mutation:");
+		printChromo(X);
+	}
+	
+	public static void testXover() {
+		
+		System.out.println();
+//		int[] parent1 = new int[]{0,1,2,3,4};
+//		int[] parent2 = new int[]{2,4,0,1,3};
+		Chromo parent1 = new Chromo();
+		Chromo parent2 = new Chromo();
+		
+		int L = parent1.chromo.length;
+		
+		Chromo child1 = new Chromo();
+		Chromo child2 = new Chromo();
+		Chromo.performOrderedXover(parent1.chromo, parent2.chromo, child1, child2);
+		
+		System.out.println("Parents");
+		printChromo(parent2);
+		printChromo(parent1);
+
+		System.out.println("Children");
+		printChromo(child1);
+		printChromo(child2);
+	}
+	
+	public static void printChromo(Chromo X) {
+		
+		for(int l=0; l<X.chromo.length; l++)
+			System.out.print(X.chromo[l] + " ");
+		System.out.println();
+	}
 
 }   // End of Search.Java ******************************************************
 

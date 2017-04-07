@@ -106,16 +106,81 @@ public class Chromo
 		switch (Parameters.mutationType){
 
 		case 1:    
-			//TODO: Plug in mutation
+			//TODO: Try displacement mutation as well
+			this.doSwapMutation();
 			break;
 		default:
 			System.out.println("ERROR - No mutation method selected");
 		}
 	}
+	
+	public void doSwapMutation() {
+		
+		int pos1 = Search.r.nextInt(chromo.length);
+		int pos2 = pos1;
+		while (pos2 == pos1) {
+			pos2 = Search.r.nextInt(chromo.length);
+		}
+		
+		int temp = chromo[pos1];
+		chromo[pos1] = chromo[pos2];
+		chromo[pos2] = temp;
+	}
+
+	public void doDisplacementMutation() {
+		
+		int L = chromo.length;
+		int[] cuts = Chromo.pickSubtourCuts(L);
+		System.out.println("cuts = " + cuts[0] + ", " + cuts[1]);
+
+		int subpathSize = cuts[1] - cuts[0] + 1;
+		int newStart = cuts[0];
+		while (newStart == cuts[0]) {
+			newStart = Search.r.nextInt(L - subpathSize + 1);
+		}
+		System.out.println("newStart = " + newStart);
+		
+		int[] newChromo = new int[L];
+		
+		int oldIdx = 0;
+		int newIdx = 0;
+		while (newIdx < L && oldIdx < L) {
+			if (oldIdx == cuts[0]) {
+				oldIdx += subpathSize;
+			}
+			if (newIdx == newStart) {
+				newIdx += subpathSize;
+			}
+			newChromo[newIdx] = chromo[oldIdx];
+			oldIdx++;
+			newIdx++;
+		}
+		
+		for (int i = 0; i < subpathSize; i++) {
+			newChromo[newStart + i] = chromo[cuts[0] + i];
+		}
+		
+		chromo = newChromo;
+	}
 
 /*******************************************************************************
 *                             STATIC METHODS                                   *
 *******************************************************************************/
+
+	public static int[] pickSubtourCuts(int L) {
+
+		int cut1 = Search.r.nextInt(L);
+		int cut2 = cut1;
+		// Cuts must not be the same and must not encompass the entire chromo
+		while (cut2 == cut1 || Math.abs(cut2 - cut1) == L - 1) {
+			cut2 = Search.r.nextInt(L);
+		}
+		
+		int[] cuts = new int[2];
+		cuts[0] = Math.min(cut1, cut2);
+		cuts[1] = Math.max(cut1, cut2);
+		return cuts;
+	}
 
 	//  Select a parent for crossover ******************************************
 
@@ -174,7 +239,8 @@ public class Chromo
 		switch (Parameters.xoverType){
 
 		case 1:    
-				//TODO: Plug in Crossover
+			//TODO: Give xover chance of using BB-fitness aware method
+			Chromo.performOrderedXover(parent1.chromo, parent2.chromo, child1, child2);
 			break;
 
 		case 2:     //  Two Point Crossover
@@ -207,6 +273,51 @@ public class Chromo
 		child.rawFitness = -1;   //  Fitness not yet evaluated
 		child.sclFitness = -1;   //  Fitness not yet scaled
 		child.proFitness = -1;   //  Fitness not yet proportionalized
+	}
+	
+	public static void performOrderedXover(int[] parent0, int[] parent1, Chromo child0, Chromo child1) {
+		
+		int L = parent0.length;
+		int[][] children = new int[2][L];
+		
+		int[] cuts = Chromo.pickSubtourCuts(L);
+		
+//		System.out.println("Cut1 = " + cuts[0]);
+//		System.out.println("Cut2 = " + cuts[1]);
+		
+		boolean[] used0 = new boolean[L];
+		boolean[] used1 = new boolean[L];
+
+		// Copy other parent's subpath
+		for(int i=cuts[0]; i<=cuts[1]; i++) {
+			children[0][i] = parent1[i];
+			children[1][i] = parent0[i];
+			
+			used0[children[0][i]] = true;
+			used1[children[1][i]] = true;
+		}
+		
+		int start = (cuts[1] + 1) % L;
+		int i = start;
+		int j0 = start; 
+		int j1 = start;
+		while (i != cuts[0]) {
+
+			while (used0[parent0[j0]])
+				j0 = (j0 + 1) % L;
+			while (used1[parent1[j1]])
+				j1 = (j1 + 1) % L;
+
+			children[0][i] = parent0[j0];
+			children[1][i] = parent1[j1];
+			
+			i = (i + 1) % L;
+			j0 = (j0 + 1) % L;
+			j1 = (j1 + 1) % L;
+		}
+		
+		child0.chromo = children[0];
+		child1.chromo = children[1];
 	}
 
 	//  Copy one chromosome to another  ***************************************
