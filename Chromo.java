@@ -33,7 +33,7 @@ public class Chromo
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		for (int i=0; i<Parameters.numGenes; i++)
 			temp.add(i);
-		Collections.shuffle(temp);
+		Collections.shuffle(temp, Search.r);
 		chromo = new int[Parameters.numGenes];
 		for(int i = 0; i < Parameters.numGenes; i ++)
 			chromo[i] = temp.get(i);

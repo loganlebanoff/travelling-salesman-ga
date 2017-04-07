@@ -33,15 +33,17 @@ double[][] adj;
 		Scanner in = new Scanner(new File(Parameters.dataInputFileName));
 
 		adj = new double[Parameters.numGenes][Parameters.numGenes];
-		double sumDist = 0;
-		for(int i = 0; i < Parameters.numGenes; i ++) {
-			for(int j = 0; j < Parameters.numGenes; j ++) {
-				double dist = in.nextDouble();
-				adj[i][j] = dist;
-				if (i > j) {
-					sumDist += dist; // Only count each pairwise distance once
-				}
+		int i = 0;
+		int j = 0;
+		while(i < Parameters.numGenes) {
+			double dist = in.nextDouble();
+			if(dist == 0) {
+				i++;
+				j = 0;
+				continue;
 			}
+			adj[i][j] = adj[j][i] = dist;
+			j++;
 		}
 	}
 
@@ -52,20 +54,22 @@ double[][] adj;
 //  COMPUTE A CHROMOSOME'S RAW FITNESS *************************************
 
 	public void doRawFitness(Chromo X) {
+		
+		// Calculates the total distance given this order of cities (not a cycle)
 
-		int[] cuts = new int[2];
-		cuts[0] = 0;
-		cuts[1] = X.chromo.length - 1;
-		X.rawFitness = calcRawFitness(X.chromo, cuts);
-	}
-
-	public double calcRawFitness(int[] chromo, int[] cuts) {
-
-		double F = 0;
-		for (int i = cuts[0]; i < cuts[1]; i++) {
-			F += adj[chromo[i]][chromo[i+1]];
+		double totalDistance = 0;
+		int prevCity = -1;
+		for (int i = 0; i < X.chromo.length; i++) {
+			int curCity = X.chromo[i];
+			if(prevCity == -1) {
+				prevCity = curCity;
+				continue;
+			}
+			double dist = adj[prevCity][curCity];
+			totalDistance += dist;
+			prevCity = curCity;
 		}
-		return F;
+		X.rawFitness = totalDistance;
 	}
 	
 	public double[][] calcSubpathFitnesses(Chromo X) {

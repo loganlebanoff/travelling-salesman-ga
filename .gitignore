@@ -1,3 +1,5 @@
 *.class
 *.project
 *.classpath
+output.txt
+TSP_summary.txt
