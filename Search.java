@@ -59,8 +59,8 @@ public class Search {
 
 	private static double fitnessStats[][];  // 0=Avg, 1=Best
 	
-	public static int extinctionFrequency = 40;
-	public static double extinctionProbability = 1;
+	public static int extinctionFrequency = 50;
+	public static double extinctionProbability = 0.2;
 	public static int extinctionType = 0;
 
 /*******************************************************************************
