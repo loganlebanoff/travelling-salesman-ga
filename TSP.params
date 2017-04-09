@@ -2,7 +2,7 @@ Experiment ID                :TSP
 Problem Type                 :TSP
 Data Input File Name         :gr24.tsp
 Number of Runs               :50
-Generations per Run          :100
+Generations per Run          :1000
 Population Size              :100
 Selection Method (1)         :1
 Fitness Scaling Type (2)     :3
