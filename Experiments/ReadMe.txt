@@ -173,3 +173,179 @@ Mutation Rate (6)            :0.005
 Random Number Seed           :75982
 Number of Genes/Points (7)   :24
 Size of Genes (18)           :200
+
+Ex9:
+public static int extinctionFrequency = 50;
+public static double extinctionProbability = 0.2;
+public static int extinctionType = 0;
+public static boolean useBBFitnessForXover = true;
+public static boolean useBBFitnessForDispMutation = true;
+Experiment ID                :TSP
+Problem Type                 :TSP
+Data Input File Name         :gr24.tsp
+Number of Runs               :50
+Generations per Run          :1000
+Population Size              :100
+Selection Method (1)         :1
+Fitness Scaling Type (2)     :3
+Crossover Type (3)           :1
+Crossover Rate (4)           :0.8
+Mutation Type (5)            :1
+Mutation Rate (6)            :0.005
+Random Number Seed           :75982
+Number of Genes/Points (7)   :24
+Size of Genes (18)           :200
+
+Ex10:
+public static int extinctionFrequency = 50;
+public static double extinctionProbability = 0.2;
+public static int extinctionType = 0;
+public static boolean useBBFitnessForXover = true;
+public static boolean useBBFitnessForDispMutation = true;
+Experiment ID                :TSP
+Problem Type                 :TSP
+Data Input File Name         :gr48.tsp
+Number of Runs               :50
+Generations per Run          :1000
+Population Size              :100
+Selection Method (1)         :1
+Fitness Scaling Type (2)     :3
+Crossover Type (3)           :1
+Crossover Rate (4)           :0.8
+Mutation Type (5)            :1
+Mutation Rate (6)            :0.005
+Random Number Seed           :75982
+Number of Genes/Points (7)   :24
+Size of Genes (18)           :200
+
+Ex11:
+public static int extinctionFrequency = 50;
+public static double extinctionProbability = 0.2;
+public static int extinctionType = 0;
+public static boolean useBBFitnessForXover = false;
+public static boolean useBBFitnessForDispMutation = true;
+Experiment ID                :TSP
+Problem Type                 :TSP
+Data Input File Name         :gr24.tsp
+Number of Runs               :50
+Generations per Run          :1000
+Population Size              :100
+Selection Method (1)         :1
+Fitness Scaling Type (2)     :3
+Crossover Type (3)           :1
+Crossover Rate (4)           :0.8
+Mutation Type (5)            :1
+Mutation Rate (6)            :0.005
+Random Number Seed           :75982
+Number of Genes/Points (7)   :24
+Size of Genes (18)           :200
+
+Ex12:
+public static int extinctionFrequency = 50;
+public static double extinctionProbability = 0.2;
+public static int extinctionType = 0;
+public static boolean useBBFitnessForXover = false;
+public static boolean useBBFitnessForDispMutation = true;
+Experiment ID                :TSP
+Problem Type                 :TSP
+Data Input File Name         :gr48.tsp
+Number of Runs               :50
+Generations per Run          :1000
+Population Size              :100
+Selection Method (1)         :1
+Fitness Scaling Type (2)     :3
+Crossover Type (3)           :1
+Crossover Rate (4)           :0.8
+Mutation Type (5)            :1
+Mutation Rate (6)            :0.005
+Random Number Seed           :75982
+Number of Genes/Points (7)   :24
+Size of Genes (18)           :200
+
+Ex13:
+public static int extinctionFrequency = 50;
+public static double extinctionProbability = 0;
+public static int extinctionType = 0;
+public static boolean useBBFitnessForXover = true;
+public static boolean useBBFitnessForDispMutation = true;
+Experiment ID                :TSP
+Problem Type                 :TSP
+Data Input File Name         :gr24.tsp
+Number of Runs               :50
+Generations per Run          :1000
+Population Size              :100
+Selection Method (1)         :1
+Fitness Scaling Type (2)     :3
+Crossover Type (3)           :1
+Crossover Rate (4)           :0.8
+Mutation Type (5)            :1
+Mutation Rate (6)            :0.005
+Random Number Seed           :75982
+Number of Genes/Points (7)   :24
+Size of Genes (18)           :200
+
+Ex14:
+public static int extinctionFrequency = 50;
+public static double extinctionProbability = 0;
+public static int extinctionType = 0;
+public static boolean useBBFitnessForXover = true;
+public static boolean useBBFitnessForDispMutation = true;
+Experiment ID                :TSP
+Problem Type                 :TSP
+Data Input File Name         :gr48.tsp
+Number of Runs               :50
+Generations per Run          :1000
+Population Size              :100
+Selection Method (1)         :1
+Fitness Scaling Type (2)     :3
+Crossover Type (3)           :1
+Crossover Rate (4)           :0.8
+Mutation Type (5)            :1
+Mutation Rate (6)            :0.005
+Random Number Seed           :75982
+Number of Genes/Points (7)   :24
+Size of Genes (18)           :200
+
+Ex15:
+public static int extinctionFrequency = 50;
+public static double extinctionProbability = 0;
+public static int extinctionType = 0;
+public static boolean useBBFitnessForXover = false;
+public static boolean useBBFitnessForDispMutation = true;
+Experiment ID                :TSP
+Problem Type                 :TSP
+Data Input File Name         :gr24.tsp
+Number of Runs               :50
+Generations per Run          :1000
+Population Size              :100
+Selection Method (1)         :1
+Fitness Scaling Type (2)     :3
+Crossover Type (3)           :1
+Crossover Rate (4)           :0.8
+Mutation Type (5)            :1
+Mutation Rate (6)            :0.005
+Random Number Seed           :75982
+Number of Genes/Points (7)   :24
+Size of Genes (18)           :200
+
+Ex16:
+public static int extinctionFrequency = 50;
+public static double extinctionProbability = 0;
+public static int extinctionType = 0;
+public static boolean useBBFitnessForXover = false;
+public static boolean useBBFitnessForDispMutation = true;
+Experiment ID                :TSP
+Problem Type                 :TSP
+Data Input File Name         :gr48.tsp
+Number of Runs               :50
+Generations per Run          :1000
+Population Size              :100
+Selection Method (1)         :1
+Fitness Scaling Type (2)     :3
+Crossover Type (3)           :1
+Crossover Rate (4)           :0.8
+Mutation Type (5)            :1
+Mutation Rate (6)            :0.005
+Random Number Seed           :75982
+Number of Genes/Points (7)   :24
+Size of Genes (18)           :200
