@@ -107,7 +107,19 @@ public class Chromo
 
 		case 1:    
 			//TODO: Try displacement mutation as well with some probability
-			this.doSwapMutation();
+			double randnum = Search.r.nextDouble();
+			if (randnum < 0.75) {
+				this.doSwapMutation();
+			}
+			else {
+				randnum = Search.r.nextDouble();
+				if (randnum < 0.5 && Search.useBBFitnessForDispMutation) {
+					this.doDisplacementMutation(true);
+				}
+				else {
+					this.doDisplacementMutation(false);
+				}
+			}
 			break;
 		default:
 			System.out.println("ERROR - No mutation method selected");
@@ -267,7 +279,15 @@ public class Chromo
 
 		case 1:    
 			//TODO: Give xover chance of using BB-fitness aware method (change false to true with some probability)
-			Chromo.performOrderedXover(parent1, parent2, child1, child2, false);
+			if (Search.useBBFitnessForXover) {
+				boolean useBBFitness;
+				double randnum = Search.r.nextDouble();
+				useBBFitness = randnum < 0.5;
+				Chromo.performOrderedXover(parent1, parent2, child1, child2, useBBFitness);
+			}
+			else {
+				Chromo.performOrderedXover(parent1, parent2, child1, child2, false);
+			}
 			break;
 
 		case 2:     //  Two Point Crossover

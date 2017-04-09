@@ -62,6 +62,8 @@ public class Search {
 	public static int extinctionFrequency = 50;
 	public static double extinctionProbability = 0.2;
 	public static int extinctionType = 0;
+	public static boolean useBBFitnessForXover = true;
+	public static boolean useBBFitnessForDispMutation = true;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
