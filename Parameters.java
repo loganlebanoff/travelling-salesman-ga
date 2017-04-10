@@ -33,7 +33,8 @@ public class Parameters
 	public static int xoverType;
 	public static double xoverRate;
 	public static int mutationType;
-	public static double mutationRate;
+	public static double mutationRateSwap;
+	public static double mutationRateDisp;
 
 	public static long seed;
 	public static int numGenes;
@@ -63,7 +64,8 @@ public class Parameters
 		xoverType = Integer.parseInt(parmInput.readLine().substring(30).trim());
 		xoverRate = Double.parseDouble(parmInput.readLine().substring(30).trim());
 		mutationType = Integer.parseInt(parmInput.readLine().substring(30).trim());
-		mutationRate = Double.parseDouble(parmInput.readLine().substring(30).trim());
+		mutationRateSwap = Double.parseDouble(parmInput.readLine().substring(30).trim());
+		mutationRateDisp = Double.parseDouble(parmInput.readLine().substring(30).trim());
 
 		seed = Long.parseLong(parmInput.readLine().substring(30).trim());
 		numGenes = Integer.parseInt(parmInput.readLine().substring(30).trim());
@@ -104,7 +106,8 @@ public class Parameters
 		output.write("Crossover Type               :  " + xoverType + "\n");
 		output.write("Crossover Rate               :  " + xoverRate + "\n");
 		output.write("Mutation Type                :  " + mutationType + "\n");
-		output.write("Mutation Rate                :  " + mutationRate + "\n");
+		output.write("Mutation Rate Swap           :  " + mutationRateSwap + "\n");
+		output.write("Mutation Rate Disp           :  " + mutationRateDisp + "\n");
 
 		output.write("Random Number Seed           :  " + seed + "\n");
 		output.write("Number of Genes/Points       :  " + numGenes + "\n");

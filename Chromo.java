@@ -106,13 +106,15 @@ public class Chromo
 		switch (Parameters.mutationType){
 
 		case 1:    
-			//TODO: Try displacement mutation as well with some probability
-			double randnum = Search.r.nextDouble();
-			if (randnum < 0.75) {
-				this.doSwapMutation();
+			
+			for (int j=0; j<(Parameters.geneSize * Parameters.numGenes); j++){
+				double randnum = Search.r.nextDouble();
+				if (randnum < Parameters.mutationRateSwap) {
+					this.doSwapMutation(j);
+				}
 			}
-			else {
-				randnum = Search.r.nextDouble();
+			double randnum = Search.r.nextDouble();
+			if (randnum < Parameters.mutationRateDisp) {
 				if (randnum < 0.5 && Search.useBBFitnessForDispMutation) {
 					this.doDisplacementMutation(true);
 				}
@@ -126,9 +128,8 @@ public class Chromo
 		}
 	}
 	
-	public void doSwapMutation() {
+	public void doSwapMutation(int pos1) {
 		
-		int pos1 = Search.r.nextInt(chromo.length);
 		int pos2 = pos1;
 		while (pos2 == pos1) {
 			pos2 = Search.r.nextInt(chromo.length);
@@ -149,14 +150,14 @@ public class Chromo
 		else {
 			cuts = Chromo.pickSubtourCutsRandom(L);
 		}
-		System.out.println("cuts = " + cuts[0] + ", " + cuts[1]);
+//		System.out.println("cuts = " + cuts[0] + ", " + cuts[1]);
 
 		int subpathSize = cuts[1] - cuts[0] + 1;
 		int newStart = cuts[0];
 		while (newStart == cuts[0]) {
 			newStart = Search.r.nextInt(L - subpathSize + 1);
 		}
-		System.out.println("newStart = " + newStart);
+//		System.out.println("newStart = " + newStart);
 		
 		int[] newChromo = new int[L];
 		

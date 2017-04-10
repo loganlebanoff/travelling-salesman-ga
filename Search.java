@@ -62,8 +62,8 @@ public class Search {
 	public static int extinctionFrequency = 50;
 	public static double extinctionProbability = 0.2;
 	public static int extinctionType = 0;
-	public static boolean useBBFitnessForXover = true;
-	public static boolean useBBFitnessForDispMutation = true;
+	public static boolean useBBFitnessForXover = false;
+	public static boolean useBBFitnessForDispMutation = false;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -84,7 +84,7 @@ public class Search {
 		Calendar dateAndTime = Calendar.getInstance(); 
 		Date startTime = dateAndTime.getTime();
 		
-		PrintWriter out = new PrintWriter(new File("output.txt"));
+		PrintWriter out = new PrintWriter(new File("output17.txt"));
 		
 
 	//  Read Parameter File
@@ -92,7 +92,7 @@ public class Search {
 		Parameters parmValues = new Parameters(args[0]);
 
 	//  Write Parameters To Summary Output File
-		String summaryFileName = Parameters.expID + "_summary.txt";
+		String summaryFileName = Parameters.expID + "_summary17.txt";
 		FileWriter summaryOutput = new FileWriter(summaryFileName);
 		parmValues.outputParameters(summaryOutput);
 
@@ -543,7 +543,7 @@ public class Search {
 		Chromo X = new Chromo();
 		System.out.println("Before swap mutation:");
 		printChromo(X);
-		X.doSwapMutation();
+		X.doSwapMutation(Search.r.nextInt(Parameters.numGenes));
 		System.out.println("After swap mutation:");
 		printChromo(X);
 	}
