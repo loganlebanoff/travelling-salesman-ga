@@ -55,16 +55,12 @@ double[][] adj;
 
 	public void doRawFitness(Chromo X) {
 		
-		// Calculates the total distance given this order of cities (not a cycle)
+		// Calculates the total distance given this order of cities (and returns back to the original city)
 
 		double totalDistance = 0;
-		int prevCity = -1;
+		int prevCity = X.chromo.length - 1;
 		for (int i = 0; i < X.chromo.length; i++) {
 			int curCity = X.chromo[i];
-			if(prevCity == -1) {
-				prevCity = curCity;
-				continue;
-			}
 			double dist = adj[prevCity][curCity];
 			totalDistance += dist;
 			prevCity = curCity;
