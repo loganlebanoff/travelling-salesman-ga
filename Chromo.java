@@ -115,7 +115,8 @@ public class Chromo
 			}
 			double randnum = Search.r.nextDouble();
 			if (randnum < Parameters.mutationRateDisp) {
-				if (randnum < 0.5 && Search.useBBFitnessForDispMutation) {
+				randnum = Search.r.nextDouble();
+				if (randnum < Search.probUseBBFitnessForDispMutation) {
 					this.doDisplacementMutation(true);
 				}
 				else {

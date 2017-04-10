@@ -60,10 +60,10 @@ public class Search {
 	private static double fitnessStats[][];  // 0=Avg, 1=Best
 	
 	public static int extinctionFrequency = 50;
-	public static double extinctionProbability = 0.2;
+	public static double extinctionProbability = 0.0;
 	public static int extinctionType = 0;
 	public static boolean useBBFitnessForXover = false;
-	public static boolean useBBFitnessForDispMutation = false;
+	public static double probUseBBFitnessForDispMutation = 0;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -84,7 +84,7 @@ public class Search {
 		Calendar dateAndTime = Calendar.getInstance(); 
 		Date startTime = dateAndTime.getTime();
 		
-		PrintWriter out = new PrintWriter(new File("output17.txt"));
+		PrintWriter out = new PrintWriter(new File("output21.txt"));
 		
 
 	//  Read Parameter File
@@ -92,7 +92,7 @@ public class Search {
 		Parameters parmValues = new Parameters(args[0]);
 
 	//  Write Parameters To Summary Output File
-		String summaryFileName = Parameters.expID + "_summary17.txt";
+		String summaryFileName = Parameters.expID + "_summary2.txt";
 		FileWriter summaryOutput = new FileWriter(summaryFileName);
 		parmValues.outputParameters(summaryOutput);
 
