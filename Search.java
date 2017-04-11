@@ -58,12 +58,15 @@ public class Search {
 	private static double TmemberFitness;
 
 	private static double fitnessStats[][];  // 0=Avg, 1=Best
+
+	public static double[] avgBBLength;
+	public static double[] countBBLength;
 	
 	public static int extinctionFrequency = 50;
-	public static double extinctionProbability = 0.0;
+	public static double extinctionProbability = 0;
 	public static int extinctionType = 0;
 	public static boolean useBBFitnessForXover = false;
-	public static double probUseBBFitnessForDispMutation = 0;
+	public static double probUseBBFitnessForDispMutation = 1;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -78,13 +81,19 @@ public class Search {
 /*******************************************************************************
 *                             STATIC METHODS                                   *
 *******************************************************************************/
+	
+	public static void addBBLength(int L) {
+		avgBBLength[G] += L;
+		countBBLength[G]++;
+	}
 
 	public static void main(String[] args) throws IOException{
 
 		Calendar dateAndTime = Calendar.getInstance(); 
 		Date startTime = dateAndTime.getTime();
 		
-		PrintWriter out = new PrintWriter(new File("output21.txt"));
+		PrintWriter out = new PrintWriter(new File("output33.txt"));
+		PrintWriter BBout = new PrintWriter(new File("BBoutput33.txt"));
 		
 
 	//  Read Parameter File
@@ -102,6 +111,9 @@ public class Search {
 			fitnessStats[0][i] = 0;
 			fitnessStats[1][i] = 0;
 		}
+		
+		avgBBLength = new double[Parameters.generations];
+		countBBLength = new double[Parameters.generations];
 
 	//	Problem Specific Setup - For new new fitness function problems, create
 	//	the appropriate class file (extending FitnessFunction.java) and add
@@ -399,7 +411,7 @@ public class Search {
 				for (int i=0; i<Parameters.popSize; i++){
 					Chromo.copyB2A(member[i], child[i]);
 				}
-
+				
 			} //  Repeat the above loop for each generation
 
 			//output stats per run
@@ -418,6 +430,11 @@ public class Search {
 
 			out.println();
 		} //End of a Run
+
+		for (int g = 0; g < Parameters.generations; g++) {
+			avgBBLength[g] /= countBBLength[g];
+			BBout.printf("%.2f\n", avgBBLength[g]);
+		}
 
 		Hwrite.left("B", 8, summaryOutput);
 
@@ -500,6 +517,7 @@ public class Search {
 			out.println("AverageOptimalGen " + avgOptGen + "\tOptimalGenStDev " + optGenStdev + "\tOptimalGenCI95 +/- " + optGenCI95 + "\tOptimalGenCI95 Range " + optGenCI95lo + " " + optGenCI95hi);
 		}
 		out.close();
+		BBout.close();
 
 		summaryOutput.write("\n");
 		summaryOutput.close();

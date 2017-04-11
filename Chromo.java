@@ -147,6 +147,7 @@ public class Chromo
 		int[] cuts;
 		if (useBBFitness) {
 			cuts = this.pickSubtourCutsUseBBFitness();
+			Search.addBBLength(cuts[1] - cuts[0] + 1);
 		}
 		else {
 			cuts = Chromo.pickSubtourCutsRandom(L);
